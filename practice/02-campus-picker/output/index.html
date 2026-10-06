@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>課間我想做什麼？ · 活動挑選器</title>
+  <style>
+    :root {
+      --bg: #f5f7fa;
+      --card-bg: #ffffff;
+      --text: #2d3748;
+      --text-muted: #718096;
+      --primary: #3182ce;
+      --primary-hover: #2b6cb0;
+      --accent: #38a169;
+      --border: #e2e8f0;
+      --danger: #e53e3e;
+      --warning-bg: #fffaf0;
+      --warning-border: #feebc8;
+      --warning-text: #c05621;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans TC", sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 20px;
+    }
+    .container {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1a202c;
+    }
+    .lang-btn {
+      padding: 6px 14px;
+      font-size: 0.875rem;
+      background: #edf2f7;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    .lang-btn:hover {
+      background: #e2e8f0;
+    }
+    .disclaimer-banner {
+      background: var(--warning-bg);
+      border: 1px solid var(--warning-border);
+      color: var(--warning-text);
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      margin-bottom: 20px;
+      text-align: center;
+      font-weight: 500;
+    }
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      padding: 24px;
+      margin-bottom: 24px;
+      border: 1px solid var(--border);
+    }
+    .form-group {
+      margin-bottom: 16px;
+    }
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+      color: #4a5568;
+    }
+    .radio-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .radio-group label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #f7fafc;
+      border: 1px solid var(--border);
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      margin-bottom: 0;
+      transition: all 0.2s;
+    }
+    .radio-group input[type="radio"] {
+      cursor: pointer;
+    }
+    .radio-group label:has(input:checked) {
+      background: #ebf8ff;
+      border-color: var(--primary);
+      color: var(--primary);
+      font-weight: 600;
+    }
+    .actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .btn {
+      flex: 2;
+      padding: 12px 20px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      text-align: center;
+    }
+    .btn:active {
+      transform: scale(0.98);
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+    .btn-secondary {
+      flex: 1;
+      background: #edf2f7;
+      color: #4a5568;
+      border: 1px solid var(--border);
+      font-size: 0.95rem;
+    }
+    .btn-secondary:hover {
+      background: #e2e8f0;
+    }
+    .result-section {
+      margin-top: 10px;
+      min-height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .result-box {
+      width: 100%;
+      background: #f0fff4;
+      border: 2px solid #9ae6b4;
+      border-radius: 10px;
+      padding: 18px 20px;
+    }
+    .result-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .result-id {
+      font-size: 0.85rem;
+      font-weight: 700;
+      background: #276749;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    .result-name {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #22543d;
+      margin-bottom: 10px;
+    }
+    .result-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 0.9rem;
+      color: #2f855a;
+    }
+    .meta-tag {
+      background: #e6fffa;
+      border: 1px solid #b2f5ea;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+    .no-result {
+      width: 100%;
+      background: #fff5f5;
+      border: 2px dashed #feb2b2;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      color: var(--danger);
+      font-weight: 600;
+      font-size: 1.05rem;
+    }
+    .history-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .history-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #2d3748;
+    }
+    .clear-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.85rem;
+      text-decoration: underline;
+    }
+    .clear-btn:hover {
+      color: var(--danger);
+    }
+    .history-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .history-item {
+      background: #f7fafc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+    }
+    .history-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .history-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      background: #e2e8f0;
+      color: #4a5568;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .history-name {
+      font-weight: 600;
+      color: #2d3748;
+    }
+    .history-meta {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .history-empty {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      padding: 14px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1 id="app-title">課間我想做什麼？</h1>
+      <button id="lang-btn" class="lang-btn" type="button">English</button>
+    </header>
+
+    <div class="disclaimer-banner" id="disclaimer">
+      教學模擬活動，不是校方公告
+    </div>
+
+    <div class="card">
+      <form id="picker-form">
+        <!-- 地點篩選 -->
+        <div class="form-group">
+          <label id="label-location">地點：</label>
+          <div class="radio-group" id="group-location">
+            <label><input type="radio" name="location" value="all" checked> <span data-i18n="all">不限</span></label>
+            <label><input type="radio" name="location" value="indoor"> <span data-i18n="indoor">室內</span></label>
+            <label><input type="radio" name="location" value="outdoor"> <span data-i18n="outdoor">室外</span></label>
+          </div>
+        </div>
+
+        <!-- 可用時間篩選 -->
+        <div class="form-group">
+          <label id="label-time">可用時間：</label>
+          <div class="radio-group" id="group-time">
+            <label><input type="radio" name="minutes" value="15"> <span>15 <span data-i18n="min">分鐘</span></span></label>
+            <label><input type="radio" name="minutes" value="30" checked> <span>30 <span data-i18n="min">分鐘</span></span></label>
+            <label><input type="radio" name="minutes" value="60"> <span>60 <span data-i18n="min">分鐘</span></span></label>
+          </div>
+        </div>
+
+        <!-- 活動強度篩選 -->
+        <div class="form-group">
+          <label id="label-energy">活動強度：</label>
+          <div class="radio-group" id="group-energy">
+            <label><input type="radio" name="energy" value="all" checked> <span data-i18n="all">不限</span></label>
+            <label><input type="radio" name="energy" value="low"> <span data-i18n="low">低</span></label>
+            <label><input type="radio" name="energy" value="medium"> <span data-i18n="medium">中</span></label>
+          </div>
+        </div>
+
+        <!-- 操作按鈕 -->
+        <div class="actions">
+          <button type="button" id="pick-btn" class="btn btn-primary">幫我選</button>
+          <button type="button" id="reset-btn" class="btn btn-secondary">重設篩選</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- 抽選結果區域 -->
+    <div class="card">
+      <div id="result-area" class="result-section">
+        <div class="history-empty" id="result-placeholder">請設定條件後點擊「幫我選」</div>
+      </div>
+    </div>
+
+    <!-- 最近 5 次抽選紀錄 -->
+    <div class="card">
+      <div class="history-header">
+        <span class="history-title" id="history-title">最近 5 次成功抽選</span>
+        <button type="button" id="clear-history-btn" class="clear-btn">清除紀錄</button>
+      </div>
+      <ul class="history-list" id="history-list">
+        <li class="history-empty" id="history-empty">目前尚無紀錄</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    // 12 筆活動資料直接內嵌（完全對照 activities.json）
+    const activities = [
+      { "id": "A01", "name_zh": "整理書包", "name_en": "Organize your bag", "location_type": "indoor", "minutes": 10, "energy": "low" },
+      { "id": "A02", "name_zh": "畫一張小卡", "name_en": "Draw a small card", "location_type": "indoor", "minutes": 15, "energy": "low" },
+      { "id": "A03", "name_zh": "寫三句讀書筆記", "name_en": "Write three study notes", "location_type": "indoor", "minutes": 10, "energy": "low" },
+      { "id": "A04", "name_zh": "安靜讀兩頁書", "name_en": "Read two pages quietly", "location_type": "indoor", "minutes": 15, "energy": "low" },
+      { "id": "A05", "name_zh": "排好明日待辦", "name_en": "Plan tomorrow’s tasks", "location_type": "indoor", "minutes": 20, "energy": "low" },
+      { "id": "A06", "name_zh": "整理本機練習檔", "name_en": "Organize practice files", "location_type": "indoor", "minutes": 30, "energy": "medium" },
+      { "id": "A07", "name_zh": "在合適位置慢走", "name_en": "Take a gentle walk in a suitable area", "location_type": "outdoor", "minutes": 15, "energy": "low" },
+      { "id": "A08", "name_zh": "觀察天空並畫草圖", "name_en": "Observe the sky and sketch", "location_type": "outdoor", "minutes": 20, "energy": "low" },
+      { "id": "A09", "name_zh": "在合適位置快走", "name_en": "Take a brisk walk in a suitable area", "location_type": "outdoor", "minutes": 30, "energy": "medium" },
+      { "id": "A10", "name_zh": "規劃小組練習", "name_en": "Plan a group exercise", "location_type": "indoor", "minutes": 45, "energy": "medium" },
+      { "id": "A11", "name_zh": "記錄自然色彩", "name_en": "Record colors in nature", "location_type": "outdoor", "minutes": 45, "energy": "low" },
+      { "id": "A12", "name_zh": "構思下一次社團活動", "name_en": "Brainstorm a future club activity", "location_type": "indoor", "minutes": 60, "energy": "medium" }
+    ];
+
+    // 多語系詞庫
+    const i18n = {
+      zh: {
+        appTitle: "課間我想做什麼？",
+        langBtn: "English",
+        disclaimer: "教學模擬活動，不是校方公告",
+        labelLocation: "地點：",
+        labelTime: "可用時間：",
+        labelEnergy: "活動強度：",
+        all: "不限",
+        indoor: "室內",
+        outdoor: "室外",
+        low: "低",
+        medium: "中",
+        min: "分鐘",
+        pickBtn: "幫我選",
+        resetBtn: "重設篩選",
+        placeholder: "請設定條件後點擊「幫我選」",
+        noResult: "沒有符合條件的活動",
+        historyTitle: "最近 5 次成功抽選",
+        clearHistory: "清除紀錄",
+        historyEmpty: "目前尚無紀錄",
+        timeNeeded: "需要時間",
+        locationType: "地點",
+        energyLevel: "強度"
+      },
+      en: {
+        appTitle: "What to do between classes?",
+        langBtn: "中文",
+        disclaimer: "Teaching simulation activity, not an official university announcement",
+        labelLocation: "Location:",
+        labelTime: "Available Time:",
+        labelEnergy: "Energy Level:",
+        all: "All",
+        indoor: "Indoor",
+        outdoor: "Outdoor",
+        low: "Low",
+        medium: "Medium",
+        min: "min",
+        pickBtn: "Pick for Me",
+        resetBtn: "Reset Filters",
+        placeholder: "Set filters and click 'Pick for Me'",
+        noResult: "No matching activities found",
+        historyTitle: "Recent 5 Successful Picks",
+        clearHistory: "Clear History",
+        historyEmpty: "No history yet",
+        timeNeeded: "Duration",
+        locationType: "Location",
+        energyLevel: "Energy"
+      }
+    };
+
+    let currentLang = "zh";
+    let historyRecords = []; // 最多 5 筆
+    let currentResult = null; // 當前抽選結果或 null / 'empty'
+
+    function updateLanguageUI() {
+      const t = i18n[currentLang];
+      document.getElementById("app-title").textContent = t.appTitle;
+      document.getElementById("lang-btn").textContent = t.langBtn;
+      document.getElementById("disclaimer").textContent = t.disclaimer;
+      document.getElementById("label-location").textContent = t.labelLocation;
+      document.getElementById("label-time").textContent = t.labelTime;
+      document.getElementById("label-energy").textContent = t.labelEnergy;
+      document.getElementById("pick-btn").textContent = t.pickBtn;
+      document.getElementById("reset-btn").textContent = t.resetBtn;
+      document.getElementById("history-title").textContent = t.historyTitle;
+      document.getElementById("clear-history-btn").textContent = t.clearHistory;
+
+      // 更新選項標籤中的 data-i18n 文字
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if (t[key]) {
+          el.textContent = t[key];
+        }
+      });
+
+      // 重新繪製當前結果與歷史紀錄
+      renderResult();
+      renderHistory();
+    }
+
+    function renderResult() {
+      const area = document.getElementById("result-area");
+      const t = i18n[currentLang];
+
+      if (!currentResult) {
+        area.innerHTML = `<div class="history-empty" id="result-placeholder">${t.placeholder}</div>`;
+      } else if (currentResult === "none") {
+        area.innerHTML = `<div class="no-result">${t.noResult}</div>`;
+      } else {
+        const item = currentResult;
+        const name = currentLang === "zh" ? item.name_zh : item.name_en;
+        const loc = t[item.location_type];
+        const nrg = t[item.energy];
+        area.innerHTML = `
+          <div class="result-box">
+            <div class="result-header">
+              <span class="result-id">${item.id}</span>
+              <span class="meta-tag">${item.minutes} ${t.min}</span>
+            </div>
+            <div class="result-name">${name}</div>
+            <div class="result-meta">
+              <span class="meta-tag">${t.locationType}：${loc}</span>
+              <span class="meta-tag">${t.energyLevel}：${nrg}</span>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    function renderHistory() {
+      const list = document.getElementById("history-list");
+      const t = i18n[currentLang];
+
+      if (historyRecords.length === 0) {
+        list.innerHTML = `<li class="history-empty">${t.historyEmpty}</li>`;
+        return;
+      }
+
+      list.innerHTML = historyRecords.map(item => {
+        const name = currentLang === "zh" ? item.name_zh : item.name_en;
+        const loc = t[item.location_type];
+        const nrg = t[item.energy];
+        return `
+          <li class="history-item">
+            <div class="history-left">
+              <span class="history-badge">${item.id}</span>
+              <span class="history-name">${name}</span>
+            </div>
+            <div class="history-meta">
+              ${item.minutes} ${t.min} · ${loc} · ${nrg}
+            </div>
+          </li>
+        `;
+      }).join("");
+    }
+
+    // 隨機抽選功能
+    document.getElementById("pick-btn").addEventListener("click", () => {
+      const selectedLocation = document.querySelector('input[name="location"]:checked').value;
+      const selectedMinutes = parseInt(document.querySelector('input[name="minutes"]:checked').value, 10);
+      const selectedEnergy = document.querySelector('input[name="energy"]:checked').value;
+
+      // 嚴格篩選：三條件同時滿足，且 minutes <= 所選可用時間
+      const filtered = activities.filter(act => {
+        const matchLoc = (selectedLocation === "all" || act.location_type === selectedLocation);
+        const matchTime = (act.minutes <= selectedMinutes);
+        const matchEnergy = (selectedEnergy === "all" || act.energy === selectedEnergy);
+        return matchLoc && matchTime && matchEnergy;
+      });
+
+      if (filtered.length === 0) {
+        currentResult = "none";
+        renderResult();
+      } else {
+        const picked = filtered[Math.floor(Math.random() * filtered.length)];
+        currentResult = picked;
+        renderResult();
+
+        // 加入最近 5 次成功紀錄（最新在最前，最多 5 筆）
+        historyRecords.unshift(picked);
+        if (historyRecords.length > 5) {
+          historyRecords = historyRecords.slice(0, 5);
+        }
+        renderHistory();
+      }
+    });
+
+    // 重設篩選功能：回到不限/30分鐘/不限，不清除歷史紀錄
+    document.getElementById("reset-btn").addEventListener("click", () => {
+      document.querySelector('input[name="location"][value="all"]').checked = true;
+      document.querySelector('input[name="minutes"][value="30"]').checked = true;
+      document.querySelector('input[name="energy"][value="all"]').checked = true;
+    });
+
+    // 清除紀錄
+    document.getElementById("clear-history-btn").addEventListener("click", () => {
+      historyRecords = [];
+      renderHistory();
+    });
+
+    // 中英切換
+    document.getElementById("lang-btn").addEventListener("click", () => {
+      currentLang = currentLang === "zh" ? "en" : "zh";
+      updateLanguageUI();
+    });
+
+    // 初始載入
+    updateLanguageUI();
+  </script>
+</body>
+</html>
