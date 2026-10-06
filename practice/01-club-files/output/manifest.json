@@ -1,0 +1,62 @@
+[
+  {
+    "source": "proposal_final.txt",
+    "destination": "01-proposals/proposal_final.txt",
+    "reason": "活動企劃第一版草案（戶外30分鐘），尚未定案，歸入企劃類完整保留"
+  },
+  {
+    "source": "proposal_final2.txt",
+    "destination": "01-proposals/proposal_final2.txt",
+    "reason": "活動企劃第二版草案（室內20分鐘），仍待討論，歸入企劃類完整保留"
+  },
+  {
+    "source": "rain_plan.txt",
+    "destination": "01-proposals/rain_plan.txt",
+    "reason": "戶外活動下雨時的室內替代備案討論，歸入企劃與備案類"
+  },
+  {
+    "source": "meeting_notes.txt",
+    "destination": "02-planning/meeting_notes.txt",
+    "reason": "記錄討論室內或戶外活動之會議記錄，歸入規劃與會議記錄類"
+  },
+  {
+    "source": "next_steps.txt",
+    "destination": "02-planning/next_steps.txt",
+    "reason": "提醒比對兩份企劃且勿預設已核准的待辦事項，歸入規劃類"
+  },
+  {
+    "source": "budget_draft.txt",
+    "destination": "02-planning/budget_draft.txt",
+    "reason": "活動用紙張預算擬案（未核准之虛擬單位），歸入行政規劃與預算類"
+  },
+  {
+    "source": "equipment_list.txt",
+    "destination": "03-equipment/equipment_list.txt",
+    "reason": "活動器材需求與盤點清單，歸入器材管理類"
+  },
+  {
+    "source": "equipment_backup.txt",
+    "destination": "03-equipment/equipment_backup.txt",
+    "reason": "器材清單之備份副本（與清單內容相同），保留完整副本歸入器材管理類"
+  },
+  {
+    "source": "announcement.txt",
+    "destination": "04-publicity/announcement.txt",
+    "reason": "活動對外宣傳公告，提醒自備筆記本，歸入文宣與公告類"
+  },
+  {
+    "source": "announcement_copy.txt",
+    "destination": "04-publicity/announcement_copy.txt",
+    "reason": "活動公告之副本（與原公告內容相同），保留完整副本歸入文宣與公告類"
+  },
+  {
+    "source": "poster_text.txt",
+    "destination": "04-publicity/poster_text.txt",
+    "reason": "海報設計文宣短標語，歸入文宣類"
+  },
+  {
+    "source": "feedback_questions.txt",
+    "destination": "05-feedback/feedback_questions.txt",
+    "reason": "活動結束後之意見調查問卷題目，歸入活動回饋類"
+  }
+]
