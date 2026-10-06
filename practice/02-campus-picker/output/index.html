@@ -40,24 +40,37 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 10px;
     }
     h1 {
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       font-weight: 700;
       color: #1a202c;
     }
-    .lang-btn {
-      padding: 6px 14px;
-      font-size: 0.875rem;
+    .lang-switcher {
+      display: inline-flex;
       background: #edf2f7;
       border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 3px;
+      gap: 2px;
+    }
+    .lang-pill {
+      padding: 5px 12px;
+      font-size: 0.825rem;
+      border: none;
+      background: transparent;
+      color: #4a5568;
+      font-weight: 600;
       border-radius: 6px;
       cursor: pointer;
-      font-weight: 600;
-      transition: background 0.2s;
+      transition: all 0.2s;
     }
-    .lang-btn:hover {
-      background: #e2e8f0;
+    .lang-pill.active {
+      background: #ffffff;
+      color: var(--primary);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     }
     .disclaimer-banner {
       background: var(--warning-bg);
@@ -183,12 +196,18 @@
       font-size: 1.3rem;
       font-weight: 700;
       color: #22543d;
+      margin-bottom: 6px;
+    }
+    .result-subname {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #4a5568;
       margin-bottom: 10px;
     }
     .result-meta {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 10px;
       font-size: 0.9rem;
       color: #2f855a;
     }
@@ -246,6 +265,8 @@
       justify-content: space-between;
       align-items: center;
       font-size: 0.9rem;
+      flex-wrap: wrap;
+      gap: 6px;
     }
     .history-left {
       display: flex;
@@ -280,7 +301,12 @@
   <div class="container">
     <header>
       <h1 id="app-title">課間我想做什麼？</h1>
-      <button id="lang-btn" class="lang-btn" type="button">English</button>
+      <!-- 三模式切換：中文 / English / 中英雙語 -->
+      <div class="lang-switcher">
+        <button type="button" class="lang-pill active" data-lang="zh">中文</button>
+        <button type="button" class="lang-pill" data-lang="en">English</button>
+        <button type="button" class="lang-pill" data-lang="bi">中英雙語</button>
+      </div>
     </header>
 
     <div class="disclaimer-banner" id="disclaimer">
@@ -363,11 +389,10 @@
       { "id": "A12", "name_zh": "構思下一次社團活動", "name_en": "Brainstorm a future club activity", "location_type": "indoor", "minutes": 60, "energy": "medium" }
     ];
 
-    // 多語系詞庫
+    // 多語系詞庫（包含中文、English、中英雙語對照模式）
     const i18n = {
       zh: {
         appTitle: "課間我想做什麼？",
-        langBtn: "English",
         disclaimer: "教學模擬活動，不是校方公告",
         labelLocation: "地點：",
         labelTime: "可用時間：",
@@ -391,7 +416,6 @@
       },
       en: {
         appTitle: "What to do between classes?",
-        langBtn: "中文",
         disclaimer: "Teaching simulation activity, not an official university announcement",
         labelLocation: "Location:",
         labelTime: "Available Time:",
@@ -412,17 +436,39 @@
         timeNeeded: "Duration",
         locationType: "Location",
         energyLevel: "Energy"
+      },
+      bi: {
+        appTitle: "課間我想做什麼？ · What to do between classes?",
+        disclaimer: "教學模擬活動，不是校方公告 (Teaching simulation activity, not an official announcement)",
+        labelLocation: "地點 / Location：",
+        labelTime: "可用時間 / Available Time：",
+        labelEnergy: "活動強度 / Energy Level：",
+        all: "不限 / All",
+        indoor: "室內 / Indoor",
+        outdoor: "室外 / Outdoor",
+        low: "低 / Low",
+        medium: "中 / Medium",
+        min: "分鐘 (min)",
+        pickBtn: "幫我選 · Pick for Me",
+        resetBtn: "重設篩選 · Reset Filters",
+        placeholder: "請設定條件後點擊「幫我選」 · Set filters and click 'Pick for Me'",
+        noResult: "沒有符合條件的活動 · No matching activities found",
+        historyTitle: "最近 5 次成功抽選 · Recent 5 Picks",
+        clearHistory: "清除紀錄 · Clear History",
+        historyEmpty: "目前尚無紀錄 · No history yet",
+        timeNeeded: "需要時間 / Duration",
+        locationType: "地點 / Location",
+        energyLevel: "強度 / Energy"
       }
     };
 
     let currentLang = "zh";
     let historyRecords = []; // 最多 5 筆
-    let currentResult = null; // 當前抽選結果或 null / 'empty'
+    let currentResult = null; // 當前抽選結果或 null / 'none'
 
     function updateLanguageUI() {
       const t = i18n[currentLang];
       document.getElementById("app-title").textContent = t.appTitle;
-      document.getElementById("lang-btn").textContent = t.langBtn;
       document.getElementById("disclaimer").textContent = t.disclaimer;
       document.getElementById("label-location").textContent = t.labelLocation;
       document.getElementById("label-time").textContent = t.labelTime;
@@ -431,6 +477,11 @@
       document.getElementById("reset-btn").textContent = t.resetBtn;
       document.getElementById("history-title").textContent = t.historyTitle;
       document.getElementById("clear-history-btn").textContent = t.clearHistory;
+
+      // 切換按鈕 active 樣式
+      document.querySelectorAll(".lang-pill").forEach(btn => {
+        btn.classList.toggle("active", btn.getAttribute("data-lang") === currentLang);
+      });
 
       // 更新選項標籤中的 data-i18n 文字
       document.querySelectorAll("[data-i18n]").forEach(el => {
@@ -455,19 +506,38 @@
         area.innerHTML = `<div class="no-result">${t.noResult}</div>`;
       } else {
         const item = currentResult;
-        const name = currentLang === "zh" ? item.name_zh : item.name_en;
-        const loc = t[item.location_type];
-        const nrg = t[item.energy];
+        let nameHtml = "";
+        let locText = "";
+        let nrgText = "";
+
+        if (currentLang === "zh") {
+          nameHtml = `<div class="result-name">${item.name_zh}</div>`;
+          locText = item.location_type === "indoor" ? "室內" : "室外";
+          nrgText = item.energy === "low" ? "低" : "中";
+        } else if (currentLang === "en") {
+          nameHtml = `<div class="result-name">${item.name_en}</div>`;
+          locText = item.location_type === "indoor" ? "Indoor" : "Outdoor";
+          nrgText = item.energy === "low" ? "Low" : "Medium";
+        } else {
+          // 中英雙語對照模式
+          nameHtml = `
+            <div class="result-name">${item.name_zh}</div>
+            <div class="result-subname">${item.name_en}</div>
+          `;
+          locText = item.location_type === "indoor" ? "室內 (Indoor)" : "室外 (Outdoor)";
+          nrgText = item.energy === "low" ? "低 (Low)" : "中 (Medium)";
+        }
+
         area.innerHTML = `
           <div class="result-box">
             <div class="result-header">
               <span class="result-id">${item.id}</span>
               <span class="meta-tag">${item.minutes} ${t.min}</span>
             </div>
-            <div class="result-name">${name}</div>
+            ${nameHtml}
             <div class="result-meta">
-              <span class="meta-tag">${t.locationType}：${loc}</span>
-              <span class="meta-tag">${t.energyLevel}：${nrg}</span>
+              <span class="meta-tag">${t.locationType}：${locText}</span>
+              <span class="meta-tag">${t.energyLevel}：${nrgText}</span>
             </div>
           </div>
         `;
@@ -484,17 +554,32 @@
       }
 
       list.innerHTML = historyRecords.map(item => {
-        const name = currentLang === "zh" ? item.name_zh : item.name_en;
-        const loc = t[item.location_type];
-        const nrg = t[item.energy];
+        let displayName = "";
+        let locText = "";
+        let nrgText = "";
+
+        if (currentLang === "zh") {
+          displayName = item.name_zh;
+          locText = item.location_type === "indoor" ? "室內" : "室外";
+          nrgText = item.energy === "low" ? "低" : "中";
+        } else if (currentLang === "en") {
+          displayName = item.name_en;
+          locText = item.location_type === "indoor" ? "Indoor" : "Outdoor";
+          nrgText = item.energy === "low" ? "Low" : "Medium";
+        } else {
+          displayName = `${item.name_zh} · ${item.name_en}`;
+          locText = item.location_type === "indoor" ? "室內 Indoor" : "室外 Outdoor";
+          nrgText = item.energy === "low" ? "低 Low" : "中 Medium";
+        }
+
         return `
           <li class="history-item">
             <div class="history-left">
               <span class="history-badge">${item.id}</span>
-              <span class="history-name">${name}</span>
+              <span class="history-name">${displayName}</span>
             </div>
             <div class="history-meta">
-              ${item.minutes} ${t.min} · ${loc} · ${nrg}
+              ${item.minutes} ${t.min} · ${locText} · ${nrgText}
             </div>
           </li>
         `;
@@ -545,10 +630,12 @@
       renderHistory();
     });
 
-    // 中英切換
-    document.getElementById("lang-btn").addEventListener("click", () => {
-      currentLang = currentLang === "zh" ? "en" : "zh";
-      updateLanguageUI();
+    // 語言按鈕點擊監聽（三模式：zh / en / bi）
+    document.querySelectorAll(".lang-pill").forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        currentLang = e.target.getAttribute("data-lang");
+        updateLanguageUI();
+      });
     });
 
     // 初始載入
