@@ -1,0 +1,2 @@
+# Preserve fixture bytes so the teacher hash baseline survives cross-platform checkout.
+practice/01-club-files/input/*.txt -text

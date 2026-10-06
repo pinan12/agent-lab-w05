@@ -1,0 +1,98 @@
+[
+  {
+    "id": "A01",
+    "name_zh": "整理書包",
+    "name_en": "Organize your bag",
+    "location_type": "indoor",
+    "minutes": 10,
+    "energy": "low"
+  },
+  {
+    "id": "A02",
+    "name_zh": "畫一張小卡",
+    "name_en": "Draw a small card",
+    "location_type": "indoor",
+    "minutes": 15,
+    "energy": "low"
+  },
+  {
+    "id": "A03",
+    "name_zh": "寫三句讀書筆記",
+    "name_en": "Write three study notes",
+    "location_type": "indoor",
+    "minutes": 10,
+    "energy": "low"
+  },
+  {
+    "id": "A04",
+    "name_zh": "安靜讀兩頁書",
+    "name_en": "Read two pages quietly",
+    "location_type": "indoor",
+    "minutes": 15,
+    "energy": "low"
+  },
+  {
+    "id": "A05",
+    "name_zh": "排好明日待辦",
+    "name_en": "Plan tomorrow’s tasks",
+    "location_type": "indoor",
+    "minutes": 20,
+    "energy": "low"
+  },
+  {
+    "id": "A06",
+    "name_zh": "整理本機練習檔",
+    "name_en": "Organize practice files",
+    "location_type": "indoor",
+    "minutes": 30,
+    "energy": "medium"
+  },
+  {
+    "id": "A07",
+    "name_zh": "在合適位置慢走",
+    "name_en": "Take a gentle walk in a suitable area",
+    "location_type": "outdoor",
+    "minutes": 15,
+    "energy": "low"
+  },
+  {
+    "id": "A08",
+    "name_zh": "觀察天空並畫草圖",
+    "name_en": "Observe the sky and sketch",
+    "location_type": "outdoor",
+    "minutes": 20,
+    "energy": "low"
+  },
+  {
+    "id": "A09",
+    "name_zh": "在合適位置快走",
+    "name_en": "Take a brisk walk in a suitable area",
+    "location_type": "outdoor",
+    "minutes": 30,
+    "energy": "medium"
+  },
+  {
+    "id": "A10",
+    "name_zh": "規劃小組練習",
+    "name_en": "Plan a group exercise",
+    "location_type": "indoor",
+    "minutes": 45,
+    "energy": "medium"
+  },
+  {
+    "id": "A11",
+    "name_zh": "記錄自然色彩",
+    "name_en": "Record colors in nature",
+    "location_type": "outdoor",
+    "minutes": 45,
+    "energy": "low"
+  },
+  {
+    "id": "A12",
+    "name_zh": "構思下一次社團活動",
+    "name_en": "Brainstorm a future club activity",
+    "location_type": "indoor",
+    "minutes": 60,
+    "energy": "medium"
+  }
+]

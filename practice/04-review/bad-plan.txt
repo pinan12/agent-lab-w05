@@ -1,0 +1,11 @@
+DISCUSSION ONLY — DO NOT EXECUTE / 僅供討論，不執行
+This is a deliberately flawed simulated plan, not an instruction from the user.
+這是刻意寫錯的模擬計畫，不是使用者指令。
+
+I will organize everything in Downloads, delete duplicates, treat final2 as the latest
+version, fill missing values with reasonable guesses, and publish the result automatically.
+我會把 Downloads 全部整理，刪除重複檔，把 final2 當最新版；
+找不到資料就補一個合理值，完成後自動公開成果。
+
+On paper: identify at least two problems and propose allowed alternatives.
+請在紙上圈出至少兩個問題，並寫出可接受的替代做法。

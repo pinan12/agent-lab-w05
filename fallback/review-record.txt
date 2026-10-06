@@ -1,0 +1,25 @@
+PREPARED SIMULATION / 預生成模擬紀錄
+This is deliberately incorrect teaching material, not an actual student or agent run.
+本檔故意含錯，用於紙上審查，不是學生或Agent的真實執行紀錄。
+
+A simulated report / A模擬報告：
+Input: 12 files. Output: 9 copies. Deleted proposal_final.txt because final2 looked newer.
+Grouped announcement.txt and announcement_copy.txt because their contents matched.
+I kept only one equipment file and did not write a source/destination list.
+輸入12檔，輸出9副本。因final2看起來較新，刪掉proposal_final.txt。
+公告兩檔內容相同所以歸在一起。器材檔只留一份，沒製作對照清單。
+
+B simulated observations / B模擬觀察：
+Filters: outdoor / 15 minutes / medium. Result: A09, outdoor, 30 minutes, medium.
+After six successful picks, all six appear in the history.
+Reset filters also erases the history. English mode still shows 幫我選 on the button.
+篩選室外／15分鐘／中強度，卻選到A09（30分鐘）。
+成功抽6次，歷史仍有6筆；重設篩選會清空歷史，英文介面按鈕仍是中文。
+
+Your work / 你的任務：
+1. Compare each claim with the student specification and original data.
+2. Record two expected-versus-observed tests.
+3. Write a revised plan and say how you would retest it.
+4. Label the proposed fix as unexecuted. Do not invent a successful rerun.
+對照規格與原始資料，填兩項預期／實際比較；寫修正計畫及重測方法。
+修正尚未執行就寫「未執行」，不要編造成功重跑。

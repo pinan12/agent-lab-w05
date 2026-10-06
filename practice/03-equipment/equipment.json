@@ -1,0 +1,66 @@
+[
+  {
+    "source_row": 1,
+    "item_id": " EQ01 ",
+    "name": "Marker / 白板筆 ",
+    "qty": 4,
+    "status": "可借"
+  },
+  {
+    "source_row": 2,
+    "item_id": "EQ02",
+    "name": "Extension cord / 延長線",
+    "qty": 2,
+    "status": "borrowed"
+  },
+  {
+    "source_row": 3,
+    "item_id": "EQ03",
+    "name": "Clip / 夾子",
+    "qty": 10,
+    "status": " available "
+  },
+  {
+    "source_row": 4,
+    "item_id": "EQ01",
+    "name": "Marker / 白板筆",
+    "qty": 4,
+    "status": "available"
+  },
+  {
+    "source_row": 5,
+    "item_id": "EQ02",
+    "name": "Extension cord / 延長線",
+    "qty": 3,
+    "status": "借出"
+  },
+  {},
+  {
+    "source_row": 7,
+    "item_id": "EQ04",
+    "name": "Paper pack / 紙張包",
+    "qty": "",
+    "status": "可出借"
+  },
+  {
+    "source_row": 8,
+    "item_id": "EQ05",
+    "name": "Tape / 膠帶",
+    "qty": -1,
+    "status": "available"
+  },
+  {
+    "source_row": 9,
+    "item_id": "EQ06",
+    "name": "Scissors / 剪刀",
+    "qty": 2,
+    "status": "待盤點"
+  },
+  {
+    "source_row": 10,
+    "item_id": " EQ07 ",
+    "name": " Folder / 資料夾 ",
+    "qty": 0,
+    "status": "可借"
+  }
+]
